@@ -18,23 +18,23 @@ var NUMBER_OF_WIZARDS = 4;
 var getRandomInt = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 var generateData = function () {
   var arr = [];
   for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
 
-    if (getRandomInt(0, 2) === 1) {
-      var fullName = MOCK.name.firstName[getRandomInt(0, MOCK.name.firstName.length)] + ' ' + MOCK.name.surName[getRandomInt(0, MOCK.name.surName.length)];
+    if (getRandomInt(0, 1) === 0) {
+      var fullName = MOCK.name.firstName[getRandomInt(0, MOCK.name.firstName.length - 1)] + ' ' + MOCK.name.surName[getRandomInt(0, MOCK.name.surName.length - 1)];
     } else {
-      fullName = MOCK.name.surName[getRandomInt(0, MOCK.name.surName.length)] + ' ' + MOCK.name.firstName[getRandomInt(0, MOCK.name.firstName.length)];
+      fullName = MOCK.name.surName[getRandomInt(0, MOCK.name.surName.length - 1)] + ' ' + MOCK.name.firstName[getRandomInt(0, MOCK.name.firstName.length - 1)];
     }
 
     arr[i] = {
       name: fullName,
-      coatColor: MOCK.coatColor[getRandomInt(0, MOCK.coatColor.length)],
-      eyesColor: MOCK.coatColor[getRandomInt(0, MOCK.eyesColor.length)]
+      coatColor: MOCK.coatColor[getRandomInt(0, MOCK.coatColor.length - 1)],
+      eyesColor: MOCK.coatColor[getRandomInt(0, MOCK.eyesColor.length - 1)]
     };
   }
   return arr;
