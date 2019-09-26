@@ -1,7 +1,55 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var form = setup.querySelector('form');
+var userNameInput = form.querySelector('input[name=username]');
+var wizardCoat = form.querySelector('.wizard-coat');
+var wizardCoatInput = form.querySelector('input[name=coat-color]');
+var wizardEyes = form.querySelector('.wizard-eyes');
+var wizardEyesInput = form.querySelector('input[name=eyes-color]');
+var wizardFireball = form.querySelector('.setup-fireball-wrap');
+var wizardFireballInput = form.querySelector('input[name=fireball-color]');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.target === userNameInput) {
+      evt.stopPropagation();
+    } else {
+      closePopup();
+    }
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var changeColorByClick = function (blockName, input, arr) {
+  var index = 1;
+  blockName.addEventListener('click', function () {
+    if (index > arr.length - 1) {
+      index = 0;
+    }
+    if (blockName.tagName === 'DIV') {
+      blockName.style.background = arr[index];
+    } else {
+      blockName.style.fill = arr[index];
+    }
+    input.value = arr[index];
+    index++;
+  });
+};
+
 var similarList = setup.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
@@ -11,7 +59,8 @@ var MOCK = {
     surName: ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг']
   },
   coatColor: ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'],
-  eyesColor: ['black', 'red', 'blue', 'yellow', 'green']
+  eyesColor: ['black', 'red', 'blue', 'yellow', 'green'],
+  fireballColor: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
 };
 var NUMBER_OF_WIZARDS = 4;
 
@@ -59,4 +108,28 @@ var renderWizardsList = function (arr) {
   setup.querySelector('.setup-similar').classList.remove('hidden');
 };
 
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
 renderWizardsList(generateData());
+
+changeColorByClick(wizardCoat, wizardCoatInput, MOCK.coatColor);
+changeColorByClick(wizardEyes, wizardEyesInput, MOCK.eyesColor);
+changeColorByClick(wizardFireball, wizardFireballInput, MOCK.fireballColor);
