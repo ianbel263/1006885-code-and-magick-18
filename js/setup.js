@@ -66,9 +66,9 @@
   };
   var NUMBER_OF_WIZARDS = 4;
 
-  var getRandomInt = function (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  };
+  // var getRandomInt = function (min, max) {
+  //   return Math.floor(Math.random() * (max - min + 1)) + min;
+  // };
 
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -81,29 +81,29 @@
   };
 
   var onXhrLoad = function (arr) {
-    var arrNew = [];
-    var counter = 0;
-    for (var i = 0; i < arr.length; i++) {
-      if (getRandomInt (0, 1) === 1 && counter < NUMBER_OF_WIZARDS) {
-        arrNew.push(arr[i]);
-        counter++;
-      } else if (counter >= NUMBER_OF_WIZARDS) {
-        break;
-      }
-    }
+    // var arrNew = [];
+    // var counter = 0;
+    // for (var i = 0; i < arr.length; i++) {
+    //   if (getRandomInt (0, 1) === 1 && counter < NUMBER_OF_WIZARDS) {
+    //     arrNew.push(arr[i]);
+    //     counter++;
+    //   } else if (counter >= NUMBER_OF_WIZARDS) {
+    //     break;
+    //   }
+    // }
 
-    if (arrNew.length < NUMBER_OF_WIZARDS) {
-      console.log("arrNew", arrNew);
-    }
+    // if (arrNew.length < NUMBER_OF_WIZARDS) {
+    //   console.log("arrNew", arrNew);
+    // }
 
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arrNew.length; i++) {
-      fragment.appendChild(renderWizard(arrNew[i]));
+    for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
+      fragment.appendChild(renderWizard(arr[i]));
     }
 
     similarList.appendChild(fragment);
     setup.querySelector('.setup-similar').classList.remove('hidden');
-   };
+  };
 
   var onXhrError = function (errorMessage) {
     var node = document.createElement('div');
@@ -136,9 +136,6 @@
   //   return arr;
   // };
 
-
-
-
   // var renderWizardsList = function (arr) {
 
   //   var fragment = document.createDocumentFragment();
@@ -149,7 +146,6 @@
   //   similarList.appendChild(fragment);
   //   setup.querySelector('.setup-similar').classList.remove('hidden');
   // };
-
 
   setupOpen.addEventListener('click', function () {
     openPopup();
@@ -176,12 +172,10 @@
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(form), function (response) {
+    window.backend.save(new FormData(form), function () {
       closePopup();
     }, onXhrError);
   });
-
-
 
   changeColorByClick(wizardCoat, wizardCoatInput, MOCK.colorCoat);
   changeColorByClick(wizardEyes, wizardEyesInput, MOCK.colorEyes);
