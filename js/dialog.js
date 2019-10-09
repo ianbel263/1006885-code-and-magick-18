@@ -27,8 +27,8 @@
         y: moveEvt.clientY
       };
 
-      window.setup.setup.style.top = (window.setup.setup.offsetTop - shift.y) + 'px';
-      window.setup.setup.style.left = (window.setup.setup.offsetLeft - shift.x) + 'px';
+      window.render.setup.style.top = (window.render.setup.offsetTop - shift.y) + 'px';
+      window.render.setup.style.left = (window.render.setup.offsetLeft - shift.x) + 'px';
 
     };
 

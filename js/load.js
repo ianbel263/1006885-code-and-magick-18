@@ -7,8 +7,8 @@
     coatColor: '',
     eyesColor: '',
     fireballColor: '',
-    onColorChange: function (color, el) {}
-  }
+    onColorChange: function () {}
+  };
 
   var getRank = function (wizard) {
     var rank = 0;
@@ -61,12 +61,12 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-    window.backend.load(onXhrLoad, onXhrError);
+  window.backend.load(onXhrLoad, onXhrError);
 
-    window.load = {
-      wizards: wizards,
-      playerWizard: playerWizard,
-      updateWizards: updateWizards,
-      onXhrError: onXhrError
-    }
+  window.load = {
+    wizards: wizards,
+    playerWizard: playerWizard,
+    updateWizards: updateWizards,
+    onXhrError: onXhrError
+  };
 })();

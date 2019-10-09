@@ -15,7 +15,7 @@
     FIREBALL: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   };
 
-  window.load.playerWizard.onColorChange = window.debounce(function(color, el) {
+  window.load.playerWizard.onColorChange = window.debounce(function (color, el) {
     switch (el) {
       case wizardCoat:
         window.load.playerWizard.coatColor = color;
