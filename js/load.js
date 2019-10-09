@@ -2,7 +2,7 @@
 
 (function () {
   var onXhrLoad = function (arr) {
-    window.render.renderSimilarWizard(arr);
+    window.similar.updateWizards(arr);
   };
 
   var onXhrError = function (errorMessage) {
