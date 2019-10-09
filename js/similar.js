@@ -15,45 +15,20 @@
     FIREBALL: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   };
 
-  var wizards = [];
-
-  var getRank = function (wizard) {
-    var rank = 0;
-    if (wizard.colorCoat === wizardCoatInput.value) {
-      rank += 2;
+  window.load.playerWizard.onColorChange = window.debounce(function(color, el) {
+    switch (el) {
+      case wizardCoat:
+        window.load.playerWizard.coatColor = color;
+        break;
+      case wizardEyes:
+        window.load.playerWizard.eyesColor = color;
+        break;
+      case wizardFireball:
+        window.load.playerWizard.fireballColor = color;
+        break;
     }
-    if (wizard.colorEyes === wizardEyesInput.value) {
-      rank += 1;
-    }
-    // if (wizard.colorFireball === wizardFireballInput.value) {
-    //   rank += 1;
-    // }
-    return rank;
-  };
 
-  var namesComparator = function (left, right) {
-    if (left > right) {
-      return 1;
-    } else if (left < right) {
-      return -1;
-    } else {
-      return 0;
-    }
-  };
-
-  var updateWizards = function (loadedArr) {
-    wizards = loadedArr;
-    window.render.renderSimilarWizard(wizards.sort(function (left, right) {
-      var rankDiff = getRank(right) - getRank(left);
-      if (rankDiff === 0) {
-        rankDiff = namesComparator(left.name, right.name);
-      }
-      return rankDiff;
-    }));
-  };
-
-  var onColorChange = window.debounce(function() {
-    updateWizards(wizards);
+    window.load.updateWizards();
   });
 
   var onCoatClick = function (arr, el, input) {
@@ -62,22 +37,19 @@
       if (i === arr.length) {
         i = 0;
       }
+      var color = arr[i];
       if (el.tagName === 'DIV') {
-        el.style.background = arr[i];
+        el.style.background = color;
       } else {
-        el.style.fill = arr[i];
+        el.style.fill = color;
       }
-      input.value = arr[i];
+      input.value = color;
       i++;
-      onColorChange();
+      window.load.playerWizard.onColorChange(color, el);
     };
   };
 
   wizardCoat.addEventListener('click', onCoatClick(WizardColor.COAT, wizardCoat, wizardCoatInput));
   wizardEyes.addEventListener('click', onCoatClick(WizardColor.EYES, wizardEyes, wizardEyesInput));
   wizardFireball.addEventListener('click', onCoatClick(WizardColor.FIREBALL, wizardFireball, wizardFireballInput));
-
-  window.similar = {
-    updateWizards: updateWizards
-  };
 })();
