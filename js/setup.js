@@ -61,22 +61,6 @@
     colorFireball: ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']
   };
 
-  var onXhrLoad = function (arr) {
-    window.render.renderSimilarWizard(arr);
-  };
-
-  var onXhrError = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
   setupOpen.addEventListener('click', function () {
     openPopup();
   });
@@ -97,13 +81,11 @@
     }
   });
 
-  window.backend.load(onXhrLoad, onXhrError);
-
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.save(new FormData(form), function () {
       closePopup();
-    }, onXhrError);
+    }, window.load.onXhrError);
   });
 
   changeColorByClick(wizardCoat, wizardCoatInput, MOCK.colorCoat);
