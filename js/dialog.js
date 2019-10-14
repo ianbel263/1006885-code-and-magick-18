@@ -6,10 +6,7 @@
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
+    var startCoords = new window.Coordinate(evt.clientX, evt.clientY);
 
     var dragged = false;
 
@@ -17,19 +14,13 @@
       moveEvt.preventDefault();
       dragged = true;
 
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
-      };
+      var shift = new window.Coordinate(startCoords.x - moveEvt.clientX, startCoords.y - moveEvt.clientY);
 
-      startCoords = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
+      startCoords.setX(moveEvt.clientX);
+      startCoords.setY(moveEvt.clientY);
 
       window.render.setup.style.top = (window.render.setup.offsetTop - shift.y) + 'px';
       window.render.setup.style.left = (window.render.setup.offsetLeft - shift.x) + 'px';
-
     };
 
     var onMouseUp = function (upEvt) {
@@ -45,7 +36,6 @@
         };
         dialogHandler.addEventListener('click', onClickPreventDefault);
       }
-
     };
 
     document.addEventListener('mousemove', onMouseMove);

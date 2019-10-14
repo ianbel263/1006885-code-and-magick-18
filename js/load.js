@@ -18,9 +18,6 @@
     if (wizard.colorEyes === playerWizard.eyesColor) {
       rank += 1;
     }
-    // if (wizard.colorFireball === wizardFireballInput.value) {
-    //   rank += 1;
-    // }
     return rank;
   };
 
